@@ -131,6 +131,8 @@ public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLay
 
     boolean mTouchingScrollingChild;
 
+    private boolean ableExpanded = false;
+
 
     public ViewPagerBottomSheetBehavior() {
     }
@@ -192,8 +194,14 @@ public class ViewPagerBottomSheetBehavior<V extends View> extends CoordinatorLay
         } else {
             peekHeight = mPeekHeight;
         }
-        mMinOffset = Math.max(0, mParentHeight - child.getHeight());
+
+        if (ableExpanded){
+            mMinOffset = Math.max(0, mParentHeight - child.getHeight());
+        } else {
+            mMinOffset = Math.max(0, mParentHeight - peekHeight);
+        }
         mMaxOffset = Math.max(mParentHeight - peekHeight, mMinOffset);
+
         if (mState == STATE_EXPANDED) {
             ViewCompat.offsetTopAndBottom(child, mMinOffset);
         } else if (mHideable && mState == STATE_HIDDEN) {

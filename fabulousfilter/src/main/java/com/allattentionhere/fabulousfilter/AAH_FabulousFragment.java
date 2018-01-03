@@ -55,7 +55,6 @@ public class AAH_FabulousFragment extends ViewPagerBottomSheetDialogFragment {
     private Callbacks callbacks;
     private AnimationListener animationListener;
     private ViewPager viewPager;
-    private boolean ableExpanded = false;
 
 
     private ViewPagerBottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new ViewPagerBottomSheetBehavior.BottomSheetCallback() {
@@ -75,11 +74,9 @@ public class AAH_FabulousFragment extends ViewPagerBottomSheetDialogFragment {
                     view_main.setLayoutParams(params);
                     break;
                 case ViewPagerBottomSheetBehavior.STATE_EXPANDED:
-                    if (ableExpanded) {
-                        ViewGroup.LayoutParams params1 = view_main.getLayoutParams();
-                        params1.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                        view_main.setLayoutParams(params1);
-                    }
+                    ViewGroup.LayoutParams params1 = view_main.getLayoutParams();
+                    params1.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                    view_main.setLayoutParams(params1);
                     break;
             }
 
@@ -361,10 +358,6 @@ public class AAH_FabulousFragment extends ViewPagerBottomSheetDialogFragment {
         void onCloseAnimationStart();
 
         void onCloseAnimationEnd();
-    }
-
-    public void setAbleExpanded(boolean ableExpanded) {
-        this.ableExpanded = ableExpanded;
     }
 
     public void setPeekHeight(int peek_height) {
