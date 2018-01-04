@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,6 +56,7 @@ public class AAH_FabulousFragment extends ViewPagerBottomSheetDialogFragment {
     private Callbacks callbacks;
     private AnimationListener animationListener;
     private ViewPager viewPager;
+    private int fabAnimColor = -1;
 
 
     private ViewPagerBottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new ViewPagerBottomSheetBehavior.BottomSheetCallback() {
@@ -136,6 +138,24 @@ public class AAH_FabulousFragment extends ViewPagerBottomSheetDialogFragment {
         fab_pos_x = x;
         fab_icon_resource = parent_fab.getDrawable();
         fab_background_color_resource = parent_fab.getBackgroundTintList();
+
+        if (null != fab_background_color_resource && -1 != fabAnimColor){
+            int[][] states = new int[][] {
+                    new int[] { android.R.attr.state_enabled}, // enabled
+                    new int[] {-android.R.attr.state_enabled}, // disabled
+                    new int[] {-android.R.attr.state_checked}, // unchecked
+                    new int[] { android.R.attr.state_pressed}  // pressed
+            };
+
+            int[] colors = new int[] {
+                    fabAnimColor,
+                    fab_background_color_resource.getColorForState(states[0], Color.BLACK),
+                    fab_background_color_resource.getColorForState(states[0], Color.BLACK),
+                    fab_background_color_resource.getColorForState(states[0], Color.BLACK)
+            };
+
+            fab_background_color_resource = new ColorStateList(states, colors);
+        }
 
         ((View) contentView.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
@@ -395,5 +415,9 @@ public class AAH_FabulousFragment extends ViewPagerBottomSheetDialogFragment {
 
     public void setViewPager(ViewPager viewPager) {
         this.viewPager = viewPager;
+    }
+
+    public void setFabAnimColor(int color) {
+        this.fabAnimColor = color;
     }
 }
